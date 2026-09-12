@@ -1,7 +1,7 @@
 # AGENTS.md — 族谱构建（Genealogy Tree Builder）工程规范
 
 > 本文件是智能体在本仓库工作的约束性规范。条款采用三级效力：【必须】/【禁止】/【应当】。
-> 平台：纯前端单页应用（Vite）｜ 技术栈：React 19 + TypeScript 5.8 + Vite 6 + Tailwind CSS v4 + @xyflow/react 12 + dagre ｜ 界面语言：简体中文 ｜ 非 git 仓库
+> 平台：纯前端单页应用（Vite）｜ 技术栈：React 19 + TypeScript 5.8 + Vite 6 + Tailwind CSS v4 + @xyflow/react 12 + dagre ｜ 界面语言：简体中文 ｜ git 仓库，远程 origin 为 github.com/aliveyang/genealogy-tree（main 分支）
 
 ## 1. 工具链与命令
 
@@ -34,7 +34,7 @@ components/   ──►   hooks/   ──►   utils/   ──►   types.ts
 | `src/types.ts` | 定义 `FamilyData` 等数据模型 | 纯类型，零运行时逻辑 |
 | `src/hooks/useFamilyTree.ts` | `FamilyData` 的唯一变更入口 | 不可变更新与 id 生成集中于此；**未对外暴露 setData** |
 | `src/utils/layoutEngine.ts` | dagre 布局 → React Flow nodes/edges | 纯函数，不触碰状态 |
-| `src/utils/kinshipCalculator.ts` | 中文称谓计算 | 纯函数 + 字典查表 |
+| `src/utils/familyStats.ts` | 世代计算与成员展示文案（世代标签、直系链、生卒文案） | 纯函数，不触碰状态 |
 | `src/components/*` | 视图与交互 | 只消费 props / 回调，不自持业务状态 |
 
 ## 3. 数据模型不变量（Invariants）
@@ -47,7 +47,7 @@ components/   ──►   hooks/   ──►   utils/   ──►   types.ts
 4. **不可变更新**：状态更新只采用展开式写法，【禁止】原地 mutation。
 5. **rootId 是 App.tsx 的本地 UI 状态**，不属于 `FamilyData`；Sidebar 可通过 `onSetRoot` 重新定根。
 
-所有数据变更【必须】经由 `useFamilyTree` 暴露的 mutation（`addPerson` / `updatePerson` / `addParent` / `addSpouse` / `addChild` / `addChildToPerson` / `addSibling`）实现；新增变更能力【必须】实现为该 hook 内的 mutation，【禁止】绕开 hook 直接改状态。
+所有数据变更【必须】经由 `useFamilyTree` 暴露的 mutation（`addPerson` / `updatePerson` / `addParent` / `addSpouse` / `addChildToPerson` / `addSibling`）实现；新增变更能力【必须】实现为该 hook 内的 mutation，【禁止】绕开 hook 直接改状态。
 
 ## 4. 渲染与布局规范
 

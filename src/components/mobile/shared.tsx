@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import { Person } from '../../types';
-import { formatYears } from '../PersonNode';
+import { formatYears } from '../../utils/familyStats';
 
 interface MobileHeaderProps {
   title: string;

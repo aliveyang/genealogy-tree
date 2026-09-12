@@ -61,3 +61,19 @@
 - **2026-09-06 第一轮**：清除 AI Studio 平台胶水与 Gemini 服务端能力（11 个依赖、约 72 行），`index.html` 中文化，tsconfig 模板遗留开关清理。已全部落地。
 - **2026-09-06 第二轮**：修复 P1——为无配偶成员添加子女时子女被静默丢弃（state 异步导致的旧闭包问题），落地为原子 mutation `addChildToPerson`，AGENTS.md 同步。
 - **仍开放项**：数据持久化（当前刷新即失为产品既定设计；已有 JSON 导出与 GEDCOM 导入演示桩，真实导入待另行评审）。
+
+---
+
+## 六、处理状态（2026-09-12 清理轮）
+
+第二节全部发现已应用，`git diff --stat` 净变化 **-368 行（+44 / -412），运行时依赖 6 → 5**：
+
+- 删除 `kinshipCalculator.ts` 整文件；AGENTS.md 第 2 节表格同步移除该行。
+- 删除 `loadExampleData`、`addChild`、`getPersonMarriage`；AGENTS.md 第 3 节 mutation 清单同步移除 `addChild`。
+- 删除 `Person.avatarUrl` / `Person.notes` 死字段与 `MobileDetail` 的 `MobileHeader` 死导入。
+- 「仅直系」视图改为复用 `directLine()`；顺带移除该块内一次重复的婚姻查找与一处已证明无效的 `keep.add`（命中值必已在集合中）。
+- `formatYears` 迁往 `src/utils/familyStats.ts`。
+- 移除 `clsx` 依赖，条件类名统一为 `[...].join(' ')` 惯用法。
+- 顺带修正 AGENTS.md 头部已过时的「非 git 仓库」表述。
+
+验证：`npm run lint`（tsc --noEmit）零错误，`npm run build` 成功。

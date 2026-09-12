@@ -1,4 +1,4 @@
-import { FamilyData } from '../types';
+import { FamilyData, Person } from '../types';
 
 const CN_NUM = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
 const RANK = ['长', '次', '三', '四', '五', '六', '七', '八', '九', '十'];
@@ -127,6 +127,14 @@ export function branchCount(data: FamilyData, gens: Map<string, number>): number
     if (v > max) max = v;
   });
   return max;
+}
+
+/** 生卒文案：1932–2008 / 1958 年生 */
+export function formatYears(person: Person): string {
+  if (person.birthYear && person.deathYear) return `${person.birthYear}–${person.deathYear}`;
+  if (person.birthYear) return `${person.birthYear} 年生`;
+  if (person.deathYear) return `卒于 ${person.deathYear}`;
+  return '生卒未录';
 }
 
 /** 直系链：从最顶层祖先到指定成员的 id 链（移动端世系速览用） */

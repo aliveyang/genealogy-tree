@@ -1,7 +1,6 @@
 import { ChevronLeft } from 'lucide-react';
 import { Person } from '../../types';
 import type { RelationRows } from '../../utils/relations';
-import { MobileHeader } from './shared';
 
 interface MobileDetailProps {
   person: Person;

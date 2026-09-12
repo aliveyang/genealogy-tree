@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import clsx from 'clsx';
 import { useFamilyTree } from './hooks/useFamilyTree';
 import { useIsMobile } from './hooks/useIsMobile';
 import { FamilyTreeViewer } from './components/FamilyTreeViewer';
@@ -387,10 +386,10 @@ export default function App() {
       <div className="flex min-h-0 flex-1">
         {/* 左侧导航：窄屏浮层 */}
         <div
-          className={clsx(
+          className={[
             'fixed inset-y-0 left-0 z-30 transition-transform duration-200 lg:static lg:z-auto lg:translate-x-0',
-            navOpen ? 'translate-x-0' : '-translate-x-full'
-          )}
+            navOpen ? 'translate-x-0' : '-translate-x-full',
+          ].join(' ')}
         >
           <Sidebar
             ref={searchRef}
@@ -427,12 +426,12 @@ export default function App() {
 
         {/* 右侧详情：xl 以下选中时浮层 */}
         <div
-          className={clsx(
+          className={[
             'shrink-0',
             selectedPerson
               ? 'fixed inset-y-0 right-0 z-30 shadow-2xl xl:static xl:z-auto xl:shadow-none'
-              : 'hidden xl:block'
-          )}
+              : 'hidden xl:block',
+          ].join(' ')}
         >
           <DetailPanel
             person={selectedPerson}

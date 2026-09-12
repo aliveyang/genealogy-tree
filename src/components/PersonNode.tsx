@@ -1,6 +1,6 @@
 import { Handle, Position } from '@xyflow/react';
 import { Person } from '../types';
-import clsx from 'clsx';
+import { formatYears } from '../utils/familyStats';
 
 interface PersonNodeProps {
   data: {
@@ -10,14 +10,6 @@ interface PersonNodeProps {
     /** 移动端紧凑名条：仅姓名 */
     compact?: boolean;
   };
-}
-
-/** 生卒文案：1932–2008 / 1958 年生 */
-export function formatYears(person: Person): string {
-  if (person.birthYear && person.deathYear) return `${person.birthYear}–${person.deathYear}`;
-  if (person.birthYear) return `${person.birthYear} 年生`;
-  if (person.deathYear) return `卒于 ${person.deathYear}`;
-  return '生卒未录';
 }
 
 const handles = (
@@ -36,10 +28,10 @@ export function PersonNode({ data }: PersonNodeProps) {
   if (compact) {
     return (
       <div
-        className={clsx(
+        className={[
           'relative box-border flex h-9 w-full items-center justify-center rounded-[8px] px-3',
-          isSelected ? 'border-2 border-primary bg-primary-soft' : 'border border-line bg-surface'
-        )}
+          isSelected ? 'border-2 border-primary bg-primary-soft' : 'border border-line bg-surface',
+        ].join(' ')}
       >
         {isNew && (
           <span className="absolute -top-[9px] left-2 rounded-[9px] bg-primary px-2 py-[2px] text-[10px] leading-[14px] font-medium text-white">
@@ -58,10 +50,10 @@ export function PersonNode({ data }: PersonNodeProps) {
 
   return (
     <div
-      className={clsx(
+      className={[
         'relative box-border flex h-[74px] w-[160px] items-center gap-[10px] rounded-[10px] bg-surface px-3',
-        isSelected ? 'border-2 border-primary bg-primary-soft' : 'border border-line'
-      )}
+        isSelected ? 'border-2 border-primary bg-primary-soft' : 'border border-line',
+      ].join(' ')}
     >
       {/* 新成员标记 */}
       {isNew && (
@@ -72,11 +64,11 @@ export function PersonNode({ data }: PersonNodeProps) {
 
       {/* 头像底 34 */}
       <div
-        className={clsx(
+        className={[
           'flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-[17px] font-serif text-[15px] font-medium',
           isMale ? 'bg-male-tint text-primary' : 'bg-female-tint text-accent',
-          person.isDeceased && 'opacity-70'
-        )}
+          person.isDeceased && 'opacity-70',
+        ].join(' ')}
       >
         {person.name.slice(0, 1)}
       </div>

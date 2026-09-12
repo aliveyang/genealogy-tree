@@ -13,7 +13,7 @@ import '@xyflow/react/dist/style.css';
 import { Crosshair, Minus, Plus } from 'lucide-react';
 import { FamilyData } from '../types';
 import { generateLayout, NODE_HEIGHT, NODE_WIDTH } from '../utils/layoutEngine';
-import { computeGenerations, generationLabel } from '../utils/familyStats';
+import { computeGenerations, directLine, generationLabel } from '../utils/familyStats';
 import { PersonNode } from './PersonNode';
 import { MarriageNode } from './MarriageNode';
 
@@ -88,35 +88,27 @@ function ViewerInner({
     const focusId = selectedPersonId ?? rootId;
     if (!focusId) return data;
 
-    const keep = new Set<string>();
-    let current: string | undefined = focusId;
-    const guard = new Set<string>();
-    while (current && !guard.has(current)) {
-      guard.add(current);
-      keep.add(current);
+    // 直系链（含自身）+ 链上每人的父母与配偶
+    const line = directLine(data, focusId);
+    const keep = new Set<string>(line);
+    line.forEach(id => {
       const parentMarriage = Object.values(data.marriages).find(m =>
-        m.childrenIds.includes(current as string)
+        m.childrenIds.includes(id)
       );
-      if (!parentMarriage) break;
-      keep.add(parentMarriage.husbandId);
-      keep.add(parentMarriage.wifeId);
-      current = parentMarriage.husbandId;
-    }
+      if (parentMarriage) {
+        keep.add(parentMarriage.husbandId);
+        keep.add(parentMarriage.wifeId);
+      }
+    });
 
-    // 直系链上每个人的子女
+    // 直系链上每个人的配偶
     [...keep].forEach(id => {
       const marriage = Object.values(data.marriages).find(
         m => m.husbandId === id || m.wifeId === id
       );
-      if (!marriage) return;
-      const child = marriage.childrenIds.find(c => guard.has(c));
-      if (child) keep.add(child);
-      const spouseMarriage = Object.values(data.marriages).find(
-        m => m.husbandId === id || m.wifeId === id
-      );
-      if (spouseMarriage) {
-        keep.add(spouseMarriage.husbandId);
-        keep.add(spouseMarriage.wifeId);
+      if (marriage) {
+        keep.add(marriage.husbandId);
+        keep.add(marriage.wifeId);
       }
     });
 

@@ -27,8 +27,6 @@ export interface Person {
   bio?: string;
   /** 生平事件，按时间正序 */
   events?: LifeEvent[];
-  notes?: string;
-  avatarUrl?: string;
 }
 
 /**
