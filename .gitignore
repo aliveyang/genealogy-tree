@@ -1,0 +1,12 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+
+# 会话与调试产物
+.workbuddy/
+.zcode/
+probe.py

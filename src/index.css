@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+/* 设计稿视觉令牌 —— 温暖人文浅色体系
+   来源：Ardot 画布《族谱家谱 · Web 应用工作台》 */
+@theme {
+  /* 底色与面 */
+  --color-bg: #f6f2ea; /* 应用底 */
+  --color-surface: #ffffff; /* 卡片 / 面板 */
+  --color-canvas: #fbf8f3; /* 族谱画布 */
+  --color-line: #e9e1d5; /* 分隔线 / 描边 */
+
+  /* 文字层级 */
+  --color-ink: #2b2721; /* 标题 / 强 */
+  --color-body: #4a443c; /* 正文 */
+  --color-muted: #7c7264; /* 次级 */
+  --color-faint: #a89d8e; /* 占位 / 未记录 */
+
+  /* 主色与辅色 */
+  --color-primary: #2e5c4e; /* 墨绿 */
+  --color-primary-soft: #f6fbf8; /* 选中底 */
+  --color-primary-tint: #e7efea; /* 头像底 / 浅块 */
+  --color-accent: #a8763f; /* 暖棕 */
+  --color-accent-soft: #fbf0de;
+  --color-danger: #c0533f;
+  --color-danger-soft: #fbedea;
+
+  /* 语义 */
+  --color-connector: #c4b49b; /* 世代连线 */
+  --color-male-tint: #e7efea;
+  --color-female-tint: #f7efe4;
+
+  /* 字体 */
+  --font-serif: "Noto Serif SC", "Songti SC", "SimSun", serif;
+  --font-sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-num: "Inter", "Noto Sans SC", sans-serif;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background: var(--color-bg);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* 数字与年份统一用 Inter */
+  .num {
+    font-family: var(--font-num);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* React Flow 视觉收敛到设计稿 */
+.react-flow__attribution {
+  display: none;
+}
+
+.react-flow__pane {
+  cursor: grab;
+}
+
+.react-flow__node {
+  font-family: var(--font-sans);
+}
